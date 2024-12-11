@@ -11,7 +11,7 @@ connectDB();
 
 app.use(express.json());
 app.use('/api/user', userRoutes);
-app.use('/api/barbershops', barberShopRoutes);
+app.use('/api/trimbook', barberShopRoutes);
 
 swaggerDocs(app);
 

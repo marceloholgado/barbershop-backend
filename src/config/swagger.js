@@ -6,9 +6,9 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'API BarberShop',
+      title: 'API TrimBook',
       version: '1.0.0',
-      description: 'Documentation of API BarberShop',
+      description: 'Documentation of API TrimBook',
     },
     servers: [
       {

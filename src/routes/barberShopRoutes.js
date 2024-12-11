@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/barbershops:
+ * /api/trimbook:
  *   post:
  *     summary: Create a new barber shop
  *     description: This endpoint creates a new barber shop.
@@ -40,7 +40,7 @@ router.post('/', authMiddleware, barbersController.createBarberShop);
 
 /**
  * @swagger
- * /api/barbershops/{url}:
+ * /api/trimbook/{url}:
  *   get:
  *     summary: Get a barber shop by URL
  *     description: This endpoint retrieves a barber shop by its unique URL.
@@ -71,7 +71,7 @@ router.get('/:url', authMiddleware, barbersController.getBarberShop);
 
 /**
  * @swagger
- * /url/{url}/barbers:
+ * /api/trimbook/{url}/barbers:
  *   post:
  *     summary: Add a new barber to a barber shop
  *     description: Create a new barber within a specific barber shop identified by the URL
@@ -124,11 +124,54 @@ router.get('/:url', authMiddleware, barbersController.getBarberShop);
  *     security:
  *       - BearerAuth: []
  */
-router.post('/url/:url/barbers', authMiddleware, barbersController.postCreateBarber);
+router.post('/:url/barbers', authMiddleware, barbersController.postCreateBarber);
 
 /**
  * @swagger
- * /api/barbershops/{url}/appointments:
+ * /api/trimbook/{url}/barbers:
+ *   delete:
+ *     summary: Delete a barber from a barber shop
+ *     description: This endpoint removes a barber from the barber shop identified by the URL.
+ *     tags:
+ *       - BarberShop
+ *     parameters:
+ *       - in: path
+ *         name: url
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique URL of the barber shop
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               barberName:
+ *                 type: string
+ *                 description: The name of the barber to be deleted
+ *     responses:
+ *       200:
+ *         description: Barber successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       404:
+ *         description: Barber shop or barber not found
+ *       500:
+ *         description: Error while deleting the barber
+ */
+router.delete('/:url/barbers', authMiddleware, barbersController.deleteBarber);
+
+
+/**
+ * @swagger
+ * /api/trimbook/{url}/appointments:
  *   post:
  *     summary: Create an appointment for a barber
  *     description: This endpoint creates an appointment for a specific barber in a barber shop.
@@ -174,11 +217,11 @@ router.post('/url/:url/barbers', authMiddleware, barbersController.postCreateBar
  *     security:
  *       - BearerAuth: []
  */
-router.post('/url/:url/appointments', barbersController.postCreateAppointments);
+router.post('/:url/appointments', barbersController.postCreateAppointments);
 
 /**
  * @swagger
- * /api/barbershops/{url}/barbers:
+ * /api/trimbook/{url}/barbers:
  *   get:
  *     summary: Get a list of barbers in a barber shop
  *     description: This endpoint retrieves the list of barbers working at a specific barber shop.
@@ -219,7 +262,7 @@ router.get('/:url/barbers', barbersController.getBarbers);
 
 /**
  * @swagger
- * /api/barbershops/{url}/barbers/{barberId}/schedule:
+ * /api/trimbook/{url}/barbers/{barberId}/schedule:
  *   get:
  *     summary: Get the available schedule for a barber
  *     description: This endpoint retrieves available time slots for a specific barber.
@@ -271,7 +314,7 @@ router.get('/:url/barbers/:barberId/schedule', barbersController.getBarberSchedu
 
 /**
  * @swagger
- * /api/barbershops/{url}/barbers/{barberId}/appointments/{appointmentId}:
+ * /api/trimbook/{url}/barbers/{barberId}/appointments/{appointmentId}:
  *   put:
  *     summary: Update an appointment for a barber
  *     description: This endpoint updates an existing appointment for a specific barber in a barber shop.
@@ -329,7 +372,7 @@ router.post('/:url/barbers/:barberId/appointments/:appointmentId', barbersContro
 
 /**
  * @swagger
- * /api/barbershops/{url}/barbers/{barberId}/appointments/{appointmentId}:
+ * /api/trimbook/{url}/barbers/{barberId}/appointments/{appointmentId}:
  *   delete:
  *     summary: Delete an appointment for a barber
  *     description: This endpoint deletes an existing appointment for a specific barber in a barber shop.

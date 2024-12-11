@@ -50,6 +50,32 @@ exports.postCreateBarber = async (req, res) => {
   }
 };
 
+exports.deleteBarber = async (req, res) => {
+  try {
+    const { url } = req.params;
+    const { barberName } = req.body;
+    if (!barberName) {
+      return res.status(400).json({ message: 'Barber name is required' });
+    }
+    const barberShop = await BarberShop.findOne({ url: url });
+    if (!barberShop) return res.status(404).json({ message: 'Barber shop not found' });
+
+    const existingBarber = barberShop.barbers.find((b) => b.id === barberId);
+
+    if (existingBarber) {
+      return res.status(400).json({ message: 'Barber does not exists' });
+    }
+
+    barberShop.barbers.remove({ id: barberId });
+    await barberShop.save();
+    res.status(200).json({ message: 'Barber successfully removed', barbers: barberShop.barbers });
+  }
+  catch (error) {
+    console.error('Error creating barber:', error);
+    res.status(500).json({ message: 'Error creating barber', error: error.message });
+  }
+};
+
 exports.postCreateAppointments = async (req, res) => {
   try {
     const { url } = req.params;
