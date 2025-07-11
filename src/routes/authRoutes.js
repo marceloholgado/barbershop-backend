@@ -5,7 +5,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/register:
+ * /api/trimbook/register:
  *   post:
  *     summary: Register a new user
  *     description: This endpoint registers a new user and returns a JWT token.
@@ -45,7 +45,7 @@ router.post('/register', register); // Cadastro de novo usuário
 
 /**
  * @swagger
- * /api/login:
+ * /api/trimbook/login:
  *   post:
  *     summary: Login and generate JWT token
  *     description: This endpoint authenticates a user and returns a JWT token.

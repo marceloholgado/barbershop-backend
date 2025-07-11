@@ -26,6 +26,14 @@ const BarberShopSchema = new mongoose.Schema({
   url: { type: String, unique: true, required: true },
   status: { type: String, enum: ['active', 'inactive'], default: 'inactive' },
   barbers: { type: [BarberSchema], default: [] }, // Lista de barbeiros
+  notifications: [
+    {
+      message: String,
+      timestamp: { type: Date, default: Date.now },
+      barberName: String,
+      read: { type: Boolean, default: false },
+    },
+  ],
 });
 
 module.exports = mongoose.model('BarberShop', BarberShopSchema);

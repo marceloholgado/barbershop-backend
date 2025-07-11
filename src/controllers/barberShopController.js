@@ -1,5 +1,5 @@
 const BarberShop = require('../models/barberShop');
-
+const io = require('../config/socket');
 
 exports.createBarberShop = async (req, res) => {
   const { name, url } = req.body;
@@ -91,8 +91,22 @@ exports.postCreateAppointments = async (req, res) => {
     const barber = barberShop.barbers.find((b) => b.name === barberName);
     if (!barber) return res.status(404).json({ message: 'Barber not found' });
 
+    // Adicionar o agendamento
     barber.schedule.push({ client, dateTime, serviceType });
+
+    // Criar uma notificação
+    const notification = {
+      message: `Novo agendamento para ${barberName} com ${client.name}`,
+      barberName,
+      timestamp: new Date(),
+    };
+    barberShop.notifications.push(notification);
+
     await barberShop.save();
+
+    // Enviar notificação via WebSocket
+    io.emit('newNotification', notification);
+
     res.status(201).json({ message: 'Appointment created successfully!', schedule: barber.schedule });
   } catch (error) {
     console.error('Error creating appointment:', error);
