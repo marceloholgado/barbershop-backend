@@ -1,7 +1,7 @@
 
 # ✂️ TrimBook API
 
-A RESTful API for managing barbershops, barbers, and client appointments. Built using **NODE.js** standards and fully documented with **Swagger UI**.
+A RESTful API for managing barbershops, barbers, and client appointments. Built using **NODE.js** and fully documented with **Swagger UI**.
 
 <img width="1196" height="867" alt="image" src="https://github.com/user-attachments/assets/4593d4f7-6b22-4c5c-b71c-7513959802be" />
 
